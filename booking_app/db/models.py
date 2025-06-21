@@ -105,6 +105,9 @@ class Room(Base):
     booking_room : Mapped[List['Booking']] = relationship('Booking', back_populates='room',
                                                           cascade='all , delete-orphan')
 
+    def __repr__(self):
+        return f'{self.room_number}'
+
 
 class Review(Base):
     __tablename__ = 'review'
@@ -117,6 +120,9 @@ class Review(Base):
     hotel_id: Mapped[int] = mapped_column(ForeignKey('hotel.id'))
     hotel : Mapped[Hotel] = relationship(Hotel , back_populates='reviews_hotel')
     created_date : Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'{self.comment}, {self.stars}, {self.author}'
 
 class Booking(Base):
     __tablename__ = 'booking'
@@ -131,3 +137,6 @@ class Booking(Base):
     check_in : Mapped[datetime] = mapped_column(DateTime)
     check_out : Mapped[datetime] = mapped_column(DateTime)
     created_date : Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    def __repr__(self):
+        return f'{self.user}'
+
